@@ -1,0 +1,14 @@
+name: Nature
+version: '${project.version}'
+main: net.jagsnet.minecraft.plugins.nature.Nature
+api-version: 1.19
+commands:
+  vines:
+    description: Vine generating command.
+    usage: /vines
+  trees:
+    description: Tree generating command.
+    usage: /trees
+  nature:
+    description: Main nature command.
+    usage: /nature
