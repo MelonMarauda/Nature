@@ -21,12 +21,20 @@ This means every time you will get a different tree.
   This grants the ability to bypass size restrictions. Use carefully.
 
 ## Trees
-- `/trees <pattern> <variation> <stemHeightRange> <stemCountRange> <logBlocks> <rootBlocks> <leafBlocks> <tipBlocks> <straight> <thinness> <branchDensity>`
-- `/trees variations`
+- `/trees`  
+  Lists all available tree commands
+- `/trees <pattern> <variation> <stemHeightRange> <stemCountRange> <logBlocks> <rootBlocks> <leafBlocks> <tipBlocks> <straight> <thinness> <branchDensity>`  
+  Generates a tree of the input parameters where you are looking
+- `/trees variations`  
+  Shows all available tree types
 
 ## Vines
-- `/vines <type> <direction> <size> <quantity> <clingyness> <thickness> <standardBlocks> <rootBlocks>`
-- `/vines directions`
+- `/vines`  
+  Returns available vine commands
+- `/vines <type> <direction> <size> <quantity> <clingyness> <thickness> <standardBlocks> <rootBlocks>`  
+  Generates a vine of the input parameters where you are standing
+- `/vines directions`  
+  Lists all available vine directions (there are alot)
 
 ## Nature
 - `/nature version`  
@@ -49,9 +57,11 @@ This means every time you will get a different tree.
   The type of tree. A full list of types can be seen below. Accepts worldedit style patterns to set percentage chances for certain tree types. More details below.
 - `stemHeightRange`  
   **Type: number range**  
+  **Max: 10**  
   The height of each stem section. Can be a range of numbers or a single number. If a range the format would be 2 numbers seperated by a `-` like `2-3`. The purpose of being able to define a range is so that the command can be run over and over and different trees are spat out so that a whole forest can be generated without having to change commands. 
 - `stemCountRange`  
   **Type: number range**  
+  **Max: 7**    
   The count of stem sections. The height of the sections is defined above. Again can be either be a range or a single number.
 - `logBlocks`  
   **Type: pattern**  
@@ -163,6 +173,39 @@ Example command:
 ---
 
 # Vines
+
+## Parameters
+
+- `type`  
+  Either `patch` for a bunch of vines in an area or `vine` for a single vine.
+- `direction`  
+  The direction that the vine will generate. A full list of directions can be found below as well as description for how they work.
+- `size`  
+  **Type: number**  
+  **Max: 200**  
+  The length of the vines
+- `quantity`  
+  **Type: number**  
+  **Max: 7**  
+  Only used for patch. When generating a single vine doesn't have any effect so just leave as `1`.
+- `clingyness`  
+  **Type: number**  
+  **Max: 6**  
+  How aggressively the vine will try and stick to the direction you've specified. Higher the value the more aggressively it will stick.
+- `thickness`  
+  **Type: number**  
+  **Max: 6**  
+  Thickness allows for parallel vines to be generated to make the vine seem thicker.
+- `standardBlocks`  
+  **Type: pattern**  
+  The main block composition of the vine. Supports worldedit style patterns as described below.
+- `rootBlocks`  
+  **Type: pattern**  
+  Every few blocks a root will generate and this is the composition of that. Supports worldedit style patterns as described below.
+
+## Directions
+
+`northdown` `eastdown` `southdown` `westdown` `northup` `eastup` `southup` `westup` `wallwestup` `wallwestdown` `wallwestleft` `wallwestright` `walleastup` `walleastdown` `walleastleft` `walleastright` `wallnorthup` `wallnorthdown` `wallnorthleft` `wallnorthright` `wallsouthup` `wallsouthdown` `wallsouthleft` `wallsouthright`
 
 ---
 

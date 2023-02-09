@@ -60,7 +60,7 @@ public class Trees implements CommandExecutor {
         String otherBlocks = args[6].toLowerCase();
         String tip = args[7].toLowerCase();
 
-        int thiccness = 1;
+        int thiccness = rangePick(args[9]);
         int branchdensity = 1;
 
         boolean straight = Boolean.parseBoolean(patternPick(args[8]));
@@ -86,7 +86,6 @@ public class Trees implements CommandExecutor {
             case "droopypalm":
             case "densepalm":
             case "pointy":
-                thiccness = rangePick(args[9]);
                 genPointyTree(p.getTargetBlock(null, 100).getLocation(), size, stems, standardBlocks, specialBlocks, otherBlocks, tip, type, straight, thiccness, p, time, branchdensity, branching, true);
                 break;
             default:
