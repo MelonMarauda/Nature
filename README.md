@@ -85,7 +85,77 @@ Branching generates a fork halfway up the main trunk generating basically a new 
 
 ### Pointy
 
+**Does not use `thinness` or `branchDensity` values specified in the command**
+
 Creates a thin pointy tree. My favorite kind of tree :)
+
+Example command:  
+`/trees `
+
+### WidePointy
+
+**Does not use `branchDensity` values specified in the command**
+
+Creates a wide pointy tree, kinda like a squat spruce tree in vanilla MC.
+
+Example command:  
+`/trees `
+
+### Palm
+
+**Does not use `branchDensity` values specified in the command**
+
+Creates a Palm style tree with 8 droopy leafy bits.
+
+Example command:  
+`/trees `
+
+### PointyPalm
+
+**Does not use `branchDensity` values specified in the command**
+
+Creates a palm style tree with 8 droopy leafy bits that are raised higher than a regular palm.
+
+Example command:  
+`/trees `
+
+### StarPalm
+
+**Does not use `branchDensity` values specified in the command**
+
+Creates a combination palm of pointy and regular. Has 16 leafy bits.
+
+Example command:  
+`/trees `
+
+### DroopyPalm
+
+**Does not use `branchDensity` values specified in the command**
+
+Creates a more droopy version of the regular 8 leafy bit palm.
+
+Example command:  
+`/trees `
+
+### DensePalm
+
+**Does not use `branchDensity` values specified in the command**
+
+Creates a dense palm with 24 leafy bits of style droopy, regular and pointy.
+
+Example command:  
+`/trees `
+
+### DeadPointy
+
+Creates a tree with pointy branches. Uses the leafBlocks pattern for its branches. The branches tend to point up alot.
+
+Example command:  
+`/trees `
+
+### DeadFlat
+
+Creates a tree very similar to DeadPointy but with its branches sticking out more.
 
 Example command:  
 `/trees `
