@@ -15,53 +15,66 @@ public class Utils {
         player.sendMessage(ChatColor.GREEN + bold + "NATURE" + ChatColor.DARK_GRAY + bold + " > " + ChatColor.WHITE + msg);
     }
 
-    public static void setCyl(Location loc, int radius, String[] blocks, boolean inner, boolean nubs, boolean ignoreBlocks, Player p, Long time){
+    public static void setCyl(Location loc, int radius, String pattern, boolean inner, boolean nubs, boolean ignoreBlocks, Player p, Long time){
         for (int i = radius; i > 0; i--) {
-            setCircle(loc, i, blocks, inner, nubs, ignoreBlocks, p, time);
+            setCircle(loc, i, pattern, inner, nubs, ignoreBlocks, p, time);
         }
     }
 
-    public static void setCircle(Location loc, int radius, String[] blocks, boolean inner, boolean nubs, boolean ignoreBlocks, Player p, Long time){
+    public static void setCircle(Location loc, int radius, String pattern, boolean inner, boolean nubs, boolean ignoreBlocks, Player p, Long time){
         HashSet<Location> circleLocations = CircleGenerator.generateCircle(loc, radius, CircleGenerator.Plane.XZ, inner, nubs);
         for (Location l : circleLocations) {
-            setBlock(l, 0, 0, 0, blocks, ignoreBlocks, p, time);
+            setBlock(l, 0, 0, 0, pattern, ignoreBlocks, p, time);
         }
     }
 
-    public static List<Location> setCurve(int segs, Location p0, Location p1, Location p2, String[] blocks, boolean ignoreBlocks, Player p, Long time) {
+    public static List<Location> setCurve(int segs, Location p0, Location p1, Location p2, String pattern, boolean ignoreBlocks, Player p, Long time) {
         List<Location> locs = CurveGen.bezierCurve(segs, p0, p1, p2);
         for (Location l : locs) {
             Location loc = l.clone();
             loc.setX(Math.floor(l.getX()));
             loc.setY(Math.floor(l.getY()));
             loc.setZ(Math.floor(l.getZ()));
-            setBlock(loc, 0, 0, 0, blocks, ignoreBlocks, p, time);
+            setBlock(loc, 0, 0, 0, pattern, ignoreBlocks, p, time);
         }
         return locs;
     }
 
-    public static void setBlock(Location inputLoc, int x, int y, int z, String[] blocks, boolean ignoreBlocks, Player p, Long time){
+    public static void setBlock(Location inputLoc, int x, int y, int z, String pattern, boolean ignoreBlocks, Player p, Long time){
         Location loc = new Location(inputLoc.getWorld(), inputLoc.getX() + x, inputLoc.getY() + y, inputLoc.getZ() + z);
         Material m = loc.getBlock().getType();
         if (ignoreBlocks || pasteable(loc, x, y, z)) {
             saveBlock(loc, time, p, m);
-            if (blocks.length == 1) {
-                loc.getBlock().setType(Material.getMaterial(blocks[0].toUpperCase()));
-                return;
-            }
-            int chance = 0;
-            int rand = ThreadLocalRandom.current().nextInt(1, 101);
-            for (String s : blocks) {
-                String[] b = s.split("%");
-                chance += Integer.parseInt(b[0]);
-                if (chance >= rand) {
-                    loc.getBlock().setType(Material.getMaterial(b[1].toUpperCase()));
-                    return;
-                }
-            }
+            loc.getBlock().setType(Material.getMaterial(patternPick(pattern)));
         }
     }
 
+    public static String patternPick(String p) {
+        String[] ps = p.split(",");
+        if (ps.length == 1) {
+            if (ps[0].contains("%")) {
+                return ps[0].split("%")[1];
+            }
+            return ps[0];
+        }
+        int chance = 0;
+        int rand = ThreadLocalRandom.current().nextInt(1, 101);
+        for (String s : ps) {
+            String[] b = s.split("%");
+            chance += Integer.parseInt(b[0]);
+            if (chance >= rand) {
+                return b[1];
+            }
+        }
+        return "Fuck";
+    }
+
+    public static int rangePick(String s) {
+        if (s.contains("-")) {
+            String[] sa = s.split("-");
+            return ThreadLocalRandom.current().nextInt(Integer.parseInt(sa[0]), Integer.parseInt(sa[1])+1);
+        } else {return Integer.parseInt(s);}
+    }
     public static void saveBlock(Location loc, Long time, Player p, Material m) {
         UUID u = p.getUniqueId();
         if (undos.containsKey(u)) {

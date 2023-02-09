@@ -44,14 +44,6 @@ public class NatureMain implements CommandExecutor {
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("curve")) {
-            Long time = System.currentTimeMillis();
-            Location l0 = p.getLocation();
-            Location l1 = new Location(l0.getWorld(), l0.getX() + 6, l0.getY() - 6, l0.getZ());
-            Location l2 = new Location(l1.getWorld(), l1.getX() + 6, l1.getY() + 10, l1.getZ() + 6);
-            Utils.setCurve(50, l0, l1, l2, "GRASS_BLOCK".split(","), true, p, time);
-        }
-
         return true;
     }
 }

@@ -42,16 +42,8 @@ public class Trees implements CommandExecutor {
             return true;
         }
 
-        int size;
-        int stems;
-
-        if (args[2].contains("-")) {
-            size = ThreadLocalRandom.current().nextInt(Integer.parseInt(args[2].split("-")[0]), Integer.parseInt(args[2].split("-")[1])+1);
-        } else {size = Integer.parseInt(args[2]);}
-
-        if (args[3].contains("-")) {
-            stems = ThreadLocalRandom.current().nextInt(Integer.parseInt(args[3].split("-")[0]), Integer.parseInt(args[3].split("-")[1])+1);
-        } else {stems = Integer.parseInt(args[3]);}
+        int size = rangePick(args[2]);
+        int stems = rangePick(args[3]);
 
         if (size > 10 && !p.hasPermission("nature.norestrictions")) {
             Utils.sendMessage(p, "Max size is 10");
@@ -63,31 +55,19 @@ public class Trees implements CommandExecutor {
             return true;
         }
 
-        String[] standardBlocks = args[4].toLowerCase().split(",");
-        String[] specialBlocks = args[5].toLowerCase().split(",");
-        String[] otherBlocks = args[6].toLowerCase().split(",");
-        String[] tip = args[7].toLowerCase().split(",");
+        String standardBlocks = args[4].toLowerCase();
+        String specialBlocks = args[5].toLowerCase();
+        String otherBlocks = args[6].toLowerCase();
+        String tip = args[7].toLowerCase();
 
         int thiccness = 1;
         int branchdensity = 1;
 
-        boolean straight = Boolean.parseBoolean(args[8]);
+        boolean straight = Boolean.parseBoolean(patternPick(args[8]));
 
         Long time = System.currentTimeMillis();
 
-        String type = "pointy";
-
-        if (args[1].contains(",")) {
-            int chance = 0;
-            int rand = ThreadLocalRandom.current().nextInt(1, 101);
-            for (String s : args[1].split(",")) {
-                String[] b = s.split("%");
-                chance += Integer.parseInt(b[0]);
-                if (chance >= rand) {
-                    type = b[1];
-                }
-            }
-        } else {type = args[1].toLowerCase();}
+        String type = patternPick(args[1]).toLowerCase();
 
         boolean branching = false;
         if (type.contains("branching")) {
@@ -98,9 +78,7 @@ public class Trees implements CommandExecutor {
         switch (type) {
             case "deadflat":
             case "deadpointy":
-                if (args[10].contains("-")) {
-                    branchdensity = ThreadLocalRandom.current().nextInt(Integer.parseInt(args[10].split("-")[0]), Integer.parseInt(args[2].split("-")[1])+1);
-                } else {branchdensity = Integer.parseInt(args[10]);}
+                branchdensity = rangePick(args[10]);
             case "widepointy":
             case "palm":
             case "pointypalm":
@@ -108,9 +86,7 @@ public class Trees implements CommandExecutor {
             case "droopypalm":
             case "densepalm":
             case "pointy":
-                if (args[9].contains("-")) {
-                    thiccness = ThreadLocalRandom.current().nextInt(Integer.parseInt(args[9].split("-")[0]), Integer.parseInt(args[2].split("-")[1])+1);
-                } else {thiccness = Integer.parseInt(args[9]);}
+                thiccness = rangePick(args[9]);
                 genPointyTree(p.getTargetBlock(null, 100).getLocation(), size, stems, standardBlocks, specialBlocks, otherBlocks, tip, type, straight, thiccness, p, time, branchdensity, branching, true);
                 break;
             default:
@@ -123,7 +99,7 @@ public class Trees implements CommandExecutor {
         return true;
     }
 
-    static void genPointyTree(Location loc, int size, int stems, String[] standardBlocks, String[] specialBlocks, String[] otherBlocks, String[] tip, String leafPattern, boolean straight, int thiccness, Player p, Long time, int branchdensity, boolean branching, boolean first) {
+    static void genPointyTree(Location loc, int size, int stems, String standardBlocks, String specialBlocks, String otherBlocks, String tip, String leafPattern, boolean straight, int thiccness, Player p, Long time, int branchdensity, boolean branching, boolean first) {
 
         //roots
         if (first) {
@@ -244,7 +220,7 @@ public class Trees implements CommandExecutor {
         }
     }
 
-    static void genPointyTreeLeaves(int state, int length, Location loc, String[] otherBlocks, Player p, Long time) {
+    static void genPointyTreeLeaves(int state, int length, Location loc, String otherBlocks, Player p, Long time) {
         if (state > 3) {
             if (state < length * 0.25) {
                 setCyl(loc, 1, otherBlocks, true, true, false, p, time);
@@ -256,7 +232,7 @@ public class Trees implements CommandExecutor {
         }
     }
 
-    static void genwidepointyTreeLeaves(int state, int length, Location loc, String[] otherBlocks, int stems, int thiccness, Player p, Long time) {
+    static void genwidepointyTreeLeaves(int state, int length, Location loc, String otherBlocks, int stems, int thiccness, Player p, Long time) {
         if (state > 5) {
             if ((state % 2) == 0) {
                 setCyl(loc, ((length - state + stems) / thiccness / 2), otherBlocks, true, true, false, p, time);
@@ -272,7 +248,7 @@ public class Trees implements CommandExecutor {
         }
     }
 
-    static void genPalmLeaves(int length, int stems, Location loc, String[] otherBlocks, int thiccness, Player p, Long time, float height) {
+    static void genPalmLeaves(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height) {
         int size = length * stems;
         for (int x = -1; x < 2; x++) {
             for (int z = -1; z < 2; z++) {
@@ -290,7 +266,7 @@ public class Trees implements CommandExecutor {
         }
     }
 
-    static void genDeadBranches(int length, int stems, Location loc, String[] otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
+    static void genDeadBranches(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
         int size = length * stems;
         for (int x = -1; x < 2; x++) {
             for (int z = -1; z < 2; z++) {
@@ -310,7 +286,7 @@ public class Trees implements CommandExecutor {
         }
     }
 
-    static void genWillowBranch(int length, int stems, Location loc, String[] otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
+    static void genWillowBranch(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
         int size = length * stems;
         for (int x = -1; x < 2; x++) {
             for (int z = -1; z < 2; z++) {

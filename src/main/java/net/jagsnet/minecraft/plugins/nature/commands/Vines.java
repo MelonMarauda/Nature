@@ -71,8 +71,8 @@ public class Vines implements CommandExecutor {
             return true;
         }
 
-        String[] standardBlocks = args[6].toLowerCase().split(",");
-        String[] otherBlocks = args[7].toLowerCase().split(",");
+        String standardBlocks = args[6].toLowerCase();
+        String otherBlocks = args[7].toLowerCase();
 
         Long time = System.currentTimeMillis();
 
@@ -133,7 +133,7 @@ public class Vines implements CommandExecutor {
     }
 
 
-    static void foreach(int count, int delay, Player p, int size, String pattern, int strength, String[] standardBlocks, String[] otherBlocks, int thiccness, Long time) {
+    static void foreach(int count, int delay, Player p, int size, String pattern, int strength, String standardBlocks, String otherBlocks, int thiccness, Long time) {
         int d = 0;
         while (count > 0) {
             d = d + delay;
@@ -142,7 +142,7 @@ public class Vines implements CommandExecutor {
         }
     }
 
-    static void spawn(int delay, Location loc, Player p, int size, String pattern, int strength, String[] standardBlocks, String[] otherBlocks, int thiccness, Long time) {
+    static void spawn(int delay, Location loc, Player p, int size, String pattern, int strength, String standardBlocks, String otherBlocks, int thiccness, Long time) {
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncDelayedTask(Nature.getInstance(), new Runnable() {
             @Override
@@ -164,7 +164,7 @@ public class Vines implements CommandExecutor {
         }, delay);
     }
 
-    static void vine(Location loc, String pattern, int size, Player p, int strength, String[] standardBlocks, String[] otherBlocks, int thiccness, Long time) {
+    static void vine(Location loc, String pattern, int size, Player p, int strength, String standardBlocks, String otherBlocks, int thiccness, Long time) {
         switch (pattern) {
             case "westdown":
                 genVine(loc, size, 0, -1, 1, -1, 1, -1, "down", strength, standardBlocks, otherBlocks, thiccness, p, time);
@@ -243,7 +243,7 @@ public class Vines implements CommandExecutor {
         }
     }
 
-    static void genVine(Location loc, int size, int maxx, int minx, int maxy, int miny, int maxz, int minz, String cling, int strength, String[] standardBlocks, String[] otherBlocks, int thiccness, Player p, Long time) {
+    static void genVine(Location loc, int size, int maxx, int minx, int maxy, int miny, int maxz, int minz, String cling, int strength, String standardBlocks, String otherBlocks, int thiccness, Player p, Long time) {
         for (int i = size; i > 0; i--) {
             
             setBlock(loc, 0, 0, 0, standardBlocks, false, p, time);
