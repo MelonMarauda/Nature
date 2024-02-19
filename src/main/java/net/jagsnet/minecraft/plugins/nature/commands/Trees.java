@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -143,6 +144,9 @@ public class Trees implements CommandExecutor {
                         break;
                     case "deadflat":
                         if (state > (length/3)) {genDeadBranches(length, stems, loc, otherBlocks, thiccness, p, time, -1.0f, branchdensity);}
+                        break;
+                    case "rimu":
+                        if (state > (length/3)) {genRimuBranches(length, stems, loc, otherBlocks, thiccness, p, time, -1.0f, branchdensity);}
                         break;
                     default: break;
                 }
@@ -285,6 +289,25 @@ public class Trees implements CommandExecutor {
         }
     }
 
+    static void genRimuBranches(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
+        int size = length * stems;
+        for (int x = -1; x < 2; x++) {
+            for (int z = -1; z < 2; z++) {
+                if (z != 0 || x != 0) {
+                    float div = 1;
+                    if (z != 0 && x != 0) {
+                        div = 1.4f;
+                    }
+                    if (ThreadLocalRandom.current().nextInt(1, branchdensity) == 1) {
+                        Location l0 = loc.clone().add(0.5, -1.5, 0.5);
+                        Location l1 = l0.clone().add((((size / thiccness) * x) + pm()) / div, (size / 8) + pm(), (((size / thiccness) * z) + pm()) / div);
+                        Location l2 = l1.clone().add((((size / thiccness) * x) + pm()) / div, ((size / 16) * height) + pm(), (((size / thiccness) * z) + pm()) / div);
+                        List<Location> locs = Utils.setCurve((size * 2), l0, l1, l2, otherBlocks, false, p, time);
+                    }
+                }
+            }
+        }
+    }
     static void genWillowBranch(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
         int size = length * stems;
         for (int x = -1; x < 2; x++) {

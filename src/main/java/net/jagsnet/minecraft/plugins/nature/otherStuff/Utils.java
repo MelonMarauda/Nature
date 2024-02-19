@@ -45,7 +45,9 @@ public class Utils {
         Material m = loc.getBlock().getType();
         if (ignoreBlocks || pasteable(loc, x, y, z)) {
             saveBlock(loc, time, p, m);
-            loc.getBlock().setType(Material.getMaterial(patternPick(pattern)));
+            try {
+                loc.getBlock().setType(Material.getMaterial(patternPick(pattern).toUpperCase()));
+            } catch (Exception e) {}
         }
     }
 
