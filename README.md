@@ -87,7 +87,7 @@ This means every time you will get a different tree.
 
 ## Variations
 
-`Pointy` `WidePointy` `Palm` `PointyPalm` `StarPalm` `DroopyPalm` `DensePalm` `DeadPointy` `DeadFlat`
+`Pointy` `WidePointy` `Palm` `PointyPalm` `StarPalm` `DroopyPalm` `DensePalm` `DeadPointy` `DeadFlat` `Oak` `Willow`
 
 Also supports branching versions of all mentioned variations. To enable branching add `branching` to the name.
 For example a branching pointy type tree would be `BranchingPointy`. 
