@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Leaves;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -43,10 +44,17 @@ public class Utils {
     public static void setBlock(Location inputLoc, int x, int y, int z, String pattern, boolean ignoreBlocks, Player p, Long time){
         Location loc = new Location(inputLoc.getWorld(), inputLoc.getX() + x, inputLoc.getY() + y, inputLoc.getZ() + z);
         Material m = loc.getBlock().getType();
-        if (ignoreBlocks || pasteable(loc, x, y, z)) {
+        if (ignoreBlocks || pasteable(inputLoc, x, y, z)) {
             saveBlock(loc, time, p, m);
             try {
-                loc.getBlock().setType(Material.getMaterial(patternPick(pattern).toUpperCase()));
+                Material mat = Material.getMaterial(patternPick(pattern).toUpperCase());
+//                sendMessage(p, m + " " + mat + " " + pasteable(loc, x, y, z));
+                Block block = loc.getBlock();
+                block.setType(mat);
+                if (block.getBlockData() instanceof Leaves leaves) {
+                    leaves.setPersistent(true);
+                    block.setBlockData(leaves);
+                }
             } catch (Exception e) {}
         }
     }

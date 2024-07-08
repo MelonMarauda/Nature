@@ -79,6 +79,8 @@ public class Trees implements CommandExecutor {
         switch (type) {
             case "deadflat":
             case "deadpointy":
+            case "oak":
+            case "willow":
                 branchdensity = rangePick(args[10]);
             case "widepointy":
             case "palm":
@@ -219,6 +221,12 @@ public class Trees implements CommandExecutor {
                 genPalmLeaves(length, stems, loc,otherBlocks, thiccness, p, time, -2.5f);
                 genPalmLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f);
                 break;
+            case "oak":
+                genOakLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f, branchdensity);
+                break;
+            case "willow":
+                genWillowLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f, branchdensity);
+                break;
             default: break;
         }
     }
@@ -308,27 +316,92 @@ public class Trees implements CommandExecutor {
             }
         }
     }
-    static void genWillowBranch(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
-        int size = length * stems;
-        for (int x = -1; x < 2; x++) {
-            for (int z = -1; z < 2; z++) {
-                if (z != 0 || x != 0) {
-                    float div = 1;
-                    if (z != 0 && x != 0) {
-                        div = 1.4f;
-                    }
-                    if (ThreadLocalRandom.current().nextInt(1, branchdensity) == 1) {
-                        Location l0 = loc.clone().add(0.5, -1.5, 0.5);
-                        Location l1 = l0.clone().add((((size / thiccness) * x) + pm()) / div, (size / 8) + pm(), (((size / thiccness) * z) + pm()) / div);
-                        Location l2 = l1.clone().add((((size / thiccness) * x) + pm()) / div, ((size / 16) * height) + pm(), (((size / thiccness) * z) + pm()) / div);
-                        Utils.setCurve((size * 2), l0, l1, l2, otherBlocks, false, p, time);
-                    }
-                }
+
+    static void genOakLeaves(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
+        double size = length * stems;
+
+        List<Location> hemisphereBlocks = generateSolidHemisphere(loc, size/thiccness);
+        for (Location location : hemisphereBlocks){
+            setBlock(location, 0, (int) -(size/thiccness), 0, otherBlocks, false, p, time);
+        }
+
+        size = size * 0.7;
+
+        for (int i = branchdensity; i > 0; i--) {
+            int xOffset = pr((int) -(size/thiccness), (int) (size/thiccness));
+            int yOffset = pr((int) -(size/thiccness), 1);
+            int zOffset = pr((int) -(size/thiccness), (int) (size/thiccness));
+            List<Location> lilHemi = generateSolidHemisphere(loc, size/thiccness);
+            for (Location location : lilHemi){
+                setBlock(location, 0 + (xOffset/2), (int) -(size/thiccness) + yOffset, 0 + (zOffset/2), otherBlocks, false, p, time);
             }
         }
     }
 
+    static void genWillowLeaves(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
+        double size = length * stems;
+
+        List<Location> hemisphereBlocks = generateSolidHemisphere(loc, size/thiccness);
+        for (Location location : hemisphereBlocks){
+            setBlock(location, 0, (int) -(size/thiccness), 0, otherBlocks, false, p, time);
+        }
+
+        size = size * 0.7;
+
+        for (int i = branchdensity; i > 0; i--) {
+            int xOffset = pr((int) -(size/thiccness), (int) (size/thiccness));
+            int yOffset = pr((int) -(size/thiccness), 1);
+            int zOffset = pr((int) -(size/thiccness), (int) (size/thiccness));
+            List<Location> lilHemi = generateSolidHemisphere(loc, size/thiccness);
+
+            List<Location> lowerLocs = new ArrayList<>();
+            int lower = 1000;
+
+            for (Location location : lilHemi){
+                setBlock(location, (int) (0 + (xOffset/1.5)), (int) -(size/thiccness) + yOffset, (int) (0 + (zOffset/1.5)), otherBlocks, false, p, time);
+
+                if (location.getY() <= lower) {
+                    if (location.getY() < lower) {
+                        lowerLocs = new ArrayList<>();
+                    }
+                    lower = (int) location.getY();
+                    lowerLocs.add(location);
+                }
+            }
+
+            for (Location location : lowerLocs) {
+                int depth = pr(0, 4);
+                for (int ii = depth; ii > 0; ii--) {
+                    setBlock(location, (int) (0 + (xOffset/1.5)), (int) -(size / thiccness) + yOffset - ii, (int) (0 + (zOffset/1.5)), otherBlocks, false, p, time);
+                }
+            }
+        }
+    }
+    public static List<Location> generateSolidHemisphere(Location location, double radius) {
+        List<Location> locations = new ArrayList<>();
+        int radiusSquared = (int) (radius * radius);
+        int x = location.getBlockX();
+        int y = location.getBlockY();
+        int z = location.getBlockZ();
+
+        for (int dx = (int) -radius; dx <= radius; dx++) {
+            for (int dz = (int) -radius; dz <= radius; dz++) {
+                int dy = (int) Math.sqrt(radiusSquared - dx * dx - dz * dz);
+
+                if (dy <= 0) continue; // Skip negative y values (below ground)
+
+                locations.add(new Location(location.getWorld(), x + dx, y + dy, z + dz));
+            }
+        }
+
+        return locations;
+    }
+
     static int pm() {
         return ThreadLocalRandom.current().nextInt(-1, 2);
+    }
+
+    static int pr(int lower, int upper) {
+        return ThreadLocalRandom.current().nextInt(lower, upper + 1);
     }
 }

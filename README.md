@@ -100,7 +100,7 @@ Branching generates a fork halfway up the main trunk generating basically a new 
 Creates a thin pointy tree. My favorite kind of tree :)
 
 Example command:  
-`/trees `
+`/trees tree pointy 4-5 3-4 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves 50%true,50%false 4`
 
 ### WidePointy
 
@@ -109,7 +109,7 @@ Example command:
 Creates a wide pointy tree, kinda like a squat spruce tree in vanilla MC.
 
 Example command:  
-`/trees `
+`/trees tree widepointy 4-5 3-4 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves 50%true,50%false 4`
 
 ### Palm
 
@@ -118,7 +118,7 @@ Example command:
 Creates a Palm style tree with 8 droopy leafy bits.
 
 Example command:  
-`/trees `
+`/trees tree 20%palm,20%pointypalm,20%starpalm,20%droopypalm,20%densepalm 3-4 3 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 13`
 
 ### PointyPalm
 
@@ -127,7 +127,7 @@ Example command:
 Creates a palm style tree with 8 droopy leafy bits that are raised higher than a regular palm.
 
 Example command:  
-`/trees `
+`/trees tree 20%palm,20%pointypalm,20%starpalm,20%droopypalm,20%densepalm 3-4 3 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 13`
 
 ### StarPalm
 
@@ -136,7 +136,7 @@ Example command:
 Creates a combination palm of pointy and regular. Has 16 leafy bits.
 
 Example command:  
-`/trees `
+`/trees tree 20%palm,20%pointypalm,20%starpalm,20%droopypalm,20%densepalm 3-4 3 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 13`
 
 ### DroopyPalm
 
@@ -145,7 +145,7 @@ Example command:
 Creates a more droopy version of the regular 8 leafy bit palm.
 
 Example command:  
-`/trees `
+`/trees tree 20%palm,20%pointypalm,20%starpalm,20%droopypalm,20%densepalm 3-4 3 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 13`
 
 ### DensePalm
 
@@ -154,21 +154,37 @@ Example command:
 Creates a dense palm with 24 leafy bits of style droopy, regular and pointy.
 
 Example command:  
-`/trees `
+`/trees tree 20%palm,20%pointypalm,20%starpalm,20%droopypalm,20%densepalm 3-4 3 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 13`
 
 ### DeadPointy
 
 Creates a tree with pointy branches. Uses the leafBlocks pattern for its branches. The branches tend to point up alot.
 
 Example command:  
-`/trees `
+`/trees tree deadpointy 3-4 4 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 25 3-4`
+`/trees tree deadpointy 3-4 3-4 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 40-50 5-10`
 
 ### DeadFlat
 
 Creates a tree very similar to DeadPointy but with its branches sticking out more.
 
 Example command:  
-`/trees `
+`/trees tree deadflat 3-4 3-4 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 40-50 5-10`
+`/trees tree deadflat 4-5 3-4 birch_wood birch_wood 80%birch_leaves,20%air birch_leaves false 20-30 5-10`
+
+### Oak
+
+Creates a tree very similar to default minecraft oak trees but with more variation and a bit bushier.
+
+Example command:  
+`/trees tree oak 2 3 oak_wood oak_wood oak_leaves oak_leaves false 4 8`
+
+### Willow
+
+Creates a tree very similar to the oak tree but its more spread out and has droopy leaves.
+
+Example command:  
+`/trees tree willow 2 7 oak_wood oak_wood oak_leaves oak_leaves false 13 8`
 
 ---
 
