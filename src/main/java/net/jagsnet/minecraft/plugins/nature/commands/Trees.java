@@ -35,11 +35,12 @@ public class Trees implements CommandExecutor {
             Utils.sendMessage(p, "EXAMPLES - - - - - - -");
             Utils.sendMessage(p, "/trees tree pointy 4-6 3-5 birch_wood birch_wood birch_leaves birch_leaves false 1");
             Utils.sendMessage(p, "/trees tree widepointy 6 5 birch_wood birch_wood 90%birch_leaves,10%air birch_leaves true 4");
+            Utils.sendMessage(p, "/trees tree willow 2 7 oak_wood oak_wood oak_leaves oak_leaves false 13 8");
             return true;
         }
 
         if (args[0].equalsIgnoreCase("variations")) {
-            Utils.sendMessage(p, "Pointy, WidePointy, Palm, PointyPalm, StarPalm, DroopyPalm, DensePalm, DeadPointy, DeadFlat");
+            Utils.sendMessage(p, "Pointy, WidePointy, Palm, PointyPalm, StarPalm, DroopyPalm, DensePalm, DeadPointy, DeadFlat, Oak, Willow");
             return true;
         }
 
