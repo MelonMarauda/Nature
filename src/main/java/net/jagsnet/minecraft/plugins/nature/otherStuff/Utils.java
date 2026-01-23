@@ -151,5 +151,5 @@ public class Utils {
         return false;
     }
 
-    public static HashMap<UUID, HashMap<Long, HashMap<Location, Material>>> undos = new HashMap<UUID, HashMap<Long, HashMap<Location, Material>>>();
+        public static HashMap<UUID, HashMap<Long, HashMap<Location, Material>>> undos = new HashMap<UUID, HashMap<Long, HashMap<Location, Material>>>();
 }

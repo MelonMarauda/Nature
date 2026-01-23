@@ -223,10 +223,10 @@ public class Trees implements CommandExecutor {
                 genPalmLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f);
                 break;
             case "oak":
-                genOakLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f, branchdensity);
+                genOakLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f, branchdensity, standardBlocks);
                 break;
             case "willow":
-                genWillowLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f, branchdensity);
+                genWillowLeaves(length, stems, loc,otherBlocks, thiccness, p, time, 0.5f, branchdensity, standardBlocks);
                 break;
             default: break;
         }
@@ -318,7 +318,7 @@ public class Trees implements CommandExecutor {
         }
     }
 
-    static void genOakLeaves(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
+    static void genOakLeaves(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity, String standardBlocks) {
         double size = length * stems;
 
         List<Location> hemisphereBlocks = generateSolidHemisphere(loc, size/thiccness);
@@ -339,7 +339,7 @@ public class Trees implements CommandExecutor {
         }
     }
 
-    static void genWillowLeaves(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity) {
+    static void genWillowLeaves(int length, int stems, Location loc, String otherBlocks, int thiccness, Player p, Long time, float height, int branchdensity, String standardBlocks) {
         double size = length * stems;
 
         List<Location> hemisphereBlocks = generateSolidHemisphere(loc, size/thiccness);
@@ -360,6 +360,11 @@ public class Trees implements CommandExecutor {
 
             for (Location location : lilHemi){
                 setBlock(location, (int) (0 + (xOffset/1.5)), (int) -(size/thiccness) + yOffset, (int) (0 + (zOffset/1.5)), otherBlocks, false, p, time);
+
+                Location l0 = new Location(loc.getWorld(), (int) loc.getX() + (0 + (xOffset/1.5)), (int) loc.getY() - (size/thiccness) + yOffset, (int) loc.getZ() + (0 + (zOffset/1.5)));
+                Location l1 = new Location(loc.getWorld(), (int) loc.getX() + (0 + (xOffset/1.5)), (int) loc.getY() - (size/thiccness) + yOffset, (int) loc.getZ() + (0 + (zOffset/1.5)));
+                Location l2 = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
+                List<Location> locs = Utils.setCurve(2, l0, l1, l2, standardBlocks, true, p, time);
 
                 if (location.getY() <= lower) {
                     if (location.getY() < lower) {
